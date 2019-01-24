@@ -4,23 +4,25 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace ExWebApiAutos.Model.ExWebApiAutos
 {
-    public partial class ExWebApiAutosDbContext : DbContext
+    public partial class ExWebApiDbContext : DbContext
     {
-        public ExWebApiAutosDbContext()
+        public ExWebApiDbContext()
         {
         }
 
-        public ExWebApiAutosDbContext(DbContextOptions<ExWebApiAutosDbContext> options)
+        public ExWebApiDbContext(DbContextOptions<ExWebApiDbContext> options)
             : base(options)
         {
         }
 
         public virtual DbSet<TAuto> TAuto { get; set; }
+        public virtual DbSet<TMarca> TMarca { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlServer("data source = LAPTOP-RL3DO4FV; initial catalog = ExamenAutos; Integrated Security = true");
             }
         }
@@ -35,11 +37,22 @@ namespace ExWebApiAutos.Model.ExWebApiAutos
 
                 entity.Property(e => e.AutoFull).IsUnicode(false);
 
-                entity.Property(e => e.AutoMarca).IsUnicode(false);
-
                 entity.Property(e => e.AutoMecanico).IsUnicode(false);
 
                 entity.Property(e => e.AutoNroplaca).IsUnicode(false);
+
+                entity.HasOne(d => d.Marca)
+                    .WithMany(p => p.TAuto)
+                    .HasForeignKey(d => d.MarcaId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_T_Auto_T_Marca");
+            });
+
+            modelBuilder.Entity<TMarca>(entity =>
+            {
+                entity.Property(e => e.MarcaId).ValueGeneratedNever();
+
+                entity.Property(e => e.MarcaNombre).IsUnicode(false);
             });
         }
     }

@@ -31,9 +31,11 @@ namespace ExWebApiAutos.Model.ExWebApiAutos
         [Column("auto_full")]
         [StringLength(2)]
         public string AutoFull { get; set; }
-        [Required]
-        [Column("auto_marca")]
-        [StringLength(15)]
-        public string AutoMarca { get; set; }
+        [Column("marca_id")]
+        public Guid MarcaId { get; set; }
+
+        [ForeignKey("MarcaId")]
+        [InverseProperty("TAuto")]
+        public TMarca Marca { get; set; }
     }
 }

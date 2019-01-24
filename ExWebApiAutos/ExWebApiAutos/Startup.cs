@@ -30,17 +30,19 @@ namespace ExWebApiAutos
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ExWebApiAutosDbContext>(options => 
+            services.AddDbContext<ExWebApiDbContext>(options => 
                 options.UseSqlServer(
-                    Configuration["Data:ExamenAutos:ConnectionString"]));
+                    Configuration["Data:ExWebApiAutos:ConnectionString"]));
 
             services.AddDbContext<AppIdentityDbContext>(options => 
             options.UseSqlServer(
-                Configuration["Data:CodiJobIdentity:ConnectionString"]));
+                Configuration["Data:ExWebApiAutosIdentity:ConnectionString"]));
 
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppIdentityDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddTransient<IAutoRepository, EFAutoRepository>();
 
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new Info { Title = "ExWebApiAutos", Version = "v1" });
@@ -61,6 +63,7 @@ namespace ExWebApiAutos
             });
             app.UseAuthentication();
             app.UseMvc();
+            IdentitySeedData.EnsurePopulated(app);
         }
     }
 }
