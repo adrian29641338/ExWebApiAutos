@@ -14,7 +14,7 @@ namespace ExWebApiAutos.Model
         {
             context = ctx;
         }
-        public void SaveProject(TAuto auto)
+        public async Task SaveProject(TAuto auto)
         {
             if (auto.AutoId == Guid.Empty)
             {
@@ -38,7 +38,7 @@ namespace ExWebApiAutos.Model
                 }
             }
             
-        context.SaveChangesAsync();
+        await context.SaveChangesAsync();
         }
         public void DeleteProyecto(Guid AutoID)
         {

@@ -43,6 +43,7 @@ namespace ExWebApiAutos
                 .AddDefaultTokenProviders();
 
             services.AddTransient<IAutoRepository, EFAutoRepository>();
+            services.AddTransient<IMarcaRepository, EFMarcaRepository>();
 
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new Info { Title = "ExWebApiAutos", Version = "v1" });

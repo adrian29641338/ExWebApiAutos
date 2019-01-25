@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ExWebApiAutos.Model
 {
-    public interface IAutoRepository
+    public interface IMarcaRepository
     {
-        IQueryable<TAuto> Autos { get; }
-        Task SaveProject(TAuto auto);
-        void DeleteProyecto(Guid AutoID);
+        IQueryable<TMarca> Marcas { get; }
+        Task SaveProject(TMarca marca);
+        void DeleteProyecto(Guid MarcaId);
     }
 }

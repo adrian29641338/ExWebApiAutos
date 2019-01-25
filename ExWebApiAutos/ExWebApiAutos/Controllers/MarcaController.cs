@@ -11,46 +11,46 @@ using Microsoft.AspNetCore.Mvc;
 namespace ExWebApiAutos.Controllers
 {
     [Route("api/[controller]")]
-    public class AutoController : Controller
+    public class MarcaController : Controller
     {
-        private IAutoRepository repositorio;
-        public AutoController(IAutoRepository repo)
+        private IMarcaRepository repositorio;
+        public MarcaController(IMarcaRepository repo)
         {
             repositorio = repo;
         }
         // GET: api/<controller>
         [HttpGet]
-        public IQueryable<TAuto> Get()
+        public IQueryable<TMarca> Get()
         {
-            return repositorio.Autos;
+            return repositorio.Marcas;
         }
         // GET api/<controller>/5
-        [HttpGet("{AutoId}")]
-        
-        public TAuto Get(Guid AutoId)
+        [HttpGet("{MarcaId}")]
+
+        public TMarca Get(Guid MarcaId)
         {
-            return repositorio.Autos.Where(p => p.AutoId == AutoId).FirstOrDefault();
+            return repositorio.Marcas.Where(p => p.MarcaId == MarcaId).FirstOrDefault();
         }
         // POST api/<controller>
         [HttpPost]
-        public async Task <IActionResult> Post([FromBody]TAuto auto)
+        public async Task<IActionResult> Post([FromBody]TMarca marca)
         {
-            await repositorio.SaveProject(auto);
+            await repositorio.SaveProject(marca);
             return Ok(true);
         }
         // PUT api/<controller>/5
-        [HttpPut("{AutoId}")]
-        public async Task <IActionResult> Put(Guid AutoId, [FromBody]TAuto auto)
+        [HttpPut("{MarcaId}")]
+        public async Task <IActionResult> Put(Guid MarcaId, [FromBody]TMarca marca)
         {
-            auto.AutoId = AutoId;
-            await repositorio.SaveProject(auto);
+            marca.MarcaId = MarcaId;
+            await repositorio.SaveProject(marca);
             return Ok(true);
         }
         // DELETE api/<controller>/5
-        [HttpDelete("{AutoId}")]
-        public IActionResult Delete(Guid AutoId)
+        [HttpDelete("{MarcaId}")]
+        public IActionResult Delete(Guid MarcaId)
         {
-            repositorio.DeleteProyecto(AutoId);
+            repositorio.DeleteProyecto(MarcaId);
             return Ok(true);
         }
     }
